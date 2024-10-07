@@ -4,6 +4,7 @@ The code and files presented here aim to aid in the reproducibility of the analy
 
 Files:
 apareiodon_te_consensus.fa
- - Consensus sequences of TE families obtained from the Apareiodon sp. genome.
+Consensus sequences of TE families obtained from the Apareiodon sp. genome.
+
 apareiodon_te_annot.gff.gz
- - Genome annotation of TEs in Apareiodon sp. genome.
+Genome annotation of TEs in Apareiodon sp. genome.
