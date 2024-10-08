@@ -1,0 +1,23 @@
+Detailed methods: TE distribution and activity on Apareiodon sp. genome
+
+Distribution of TEs on Apareiodon sp. scaffolds
+# Divide genome in 1Mb fragments
+$ bedtools makewindows -g Apar_genome.fasta.length -w 1000000 -s 100000 > genome_windows.bed
+
+# TE coverage on genome
+$ bedtools coverage -a genome_windows.bed -b apareiodon_te_annot.gff > genome_coverage.out
+- For the distribution of TE superfamilies the script coverage_superf.sh was used, which runs the above code for each TE superfamily separately.
+
+# The statistical difference in the distribution of TEs in the genome was calculated and plotted according to the R script anova_tukey.R
+- For the statistical differences of specific TE superfamilies between scaffolds, the same script was applied, on separated coverage files for each superfamily.
+
+Ages of TE insertions
+# 
+grep $line SmansoniV10.fa.out.gff | awk '{if($5-$4>500){print$0}}' | bedtools getfasta -fi schistosoma_mansoni.PRJEA36577.WBPS18.genomic.fa -bed - > ${line}.fa
+mafft --auto ${line}.fa > ${line}.aln
+trimal -in ${line}.aln -gt 0.01 -keepheader > ${line}.trim.aln
+sed 's/:/_/g' ${line}.trim.aln > ${line}.trim.aln.sub
+FastTree -nt -gamma < ${line}.trim.aln.sub > ${line}.tree
+./termlength.py ${line}.tree > ${line}.tbl
+
+# The ages of TE insertions and the correlations between the number of insertions in a family and age were calculated with the te_age.R script
