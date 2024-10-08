@@ -3,6 +3,7 @@ This repository contains the detailed methods and code used in the paper entitle
 The code and files presented here aim to aid in the reproducibility of the analysis presented in the paper.
 
 Files:
+
 apareiodon_te_consensus.fa
 Consensus sequences of TE families obtained from the Apareiodon sp. genome.
 
