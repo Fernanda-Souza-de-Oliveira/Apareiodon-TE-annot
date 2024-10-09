@@ -12,12 +12,17 @@ $ bedtools coverage -a genome_windows.bed -b apareiodon_te_annot.gff > genome_co
 - For the statistical differences of specific TE superfamilies between scaffolds, the same script was applied, on separated coverage files for each superfamily.
 
 Ages of TE insertions
-# 
-grep $line SmansoniV10.fa.out.gff | awk '{if($5-$4>500){print$0}}' | bedtools getfasta -fi schistosoma_mansoni.PRJEA36577.WBPS18.genomic.fa -bed - > ${line}.fa
-mafft --auto ${line}.fa > ${line}.aln
-trimal -in ${line}.aln -gt 0.01 -keepheader > ${line}.trim.aln
-sed 's/:/_/g' ${line}.trim.aln > ${line}.trim.aln.sub
-FastTree -nt -gamma < ${line}.trim.aln.sub > ${line}.tree
-./termlength.py ${line}.tree > ${line}.tbl
+# To calculate the average age of TE families insertions bigger than 100 bp were extracted from the TE annotation, random 1000 insertions were selected for families with a high number of copies, sequences were aligned on mafft, and trimmed with trimal. Trees were built with FastTree, and terminal branch lengths were extracted with the termlength.py script
+$ grep $line apareiodon_te_annot.gff | awk '{if($5-$4>100){print$0}}' | shuf -n 1000 | bedtools getfasta -fi Apar_genome.fasta -bed - > ${line}.fa
+$ mafft --auto ${line}.fa > ${line}.aln
+$ trimal -in ${line}.aln -gt 0.01 -keepheader > ${line}.trim.aln
+$ sed 's/:/_/g' ${line}.trim.aln > ${line}.trim.aln.sub
+$ FastTree -nt -gamma < ${line}.trim.aln.sub > ${line}.tree
+$ ./termlength.py ${line}.tree > ${line}.tbl
 
-# The ages of TE insertions and the correlations between the number of insertions in a family and age were calculated with the te_age.R script
+# medians were calculated using the median function in R, and statistical analysis on median TE age from different superfamilies and the correlations between the number of insertions in a family and age were calculated with the te_age.R script
+
+Full-length copies characterization
+# Insertions possessing at least 90% of its consensus size were extracted from the annotation file with the script TE_len.py.  
+# Fasta sequences from the full-length insertions were extracted and translated into amino acids. Sequences that had all the characteristic TE protein domains from the respective families were extracted and aligned. Consensus sequences were generated from alignments with conserved sequences and the consensus were checked on TE-aid for other structural domains. 
+$ 
