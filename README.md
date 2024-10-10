@@ -2,7 +2,9 @@ This repository contains the detailed methods and code used in the paper entitle
 
 The code and files presented here aim to aid in the reproducibility of the analysis presented in the paper.
 
+
 Files: 
+
 detailed_methods - Detailed methods and code used to generate the data on the TE distribution and activity on Apareiodon sp. genome
 
 coverage_superf.sh - Script for the coverage analysis on the different TE superfamilies.
