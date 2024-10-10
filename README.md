@@ -2,10 +2,22 @@ This repository contains the detailed methods and code used in the paper entitle
 
 The code and files presented here aim to aid in the reproducibility of the analysis presented in the paper.
 
+Analysis of TE distribution and activity on Apareiodon sp. genome:
+# Genome coverage of TEs
+coverage_TEs - Code to check the TE coverage on the Apareiodon sp. genome
+coverage_superf.sh - Script for the coverage analysis on the different TE superfamilies.
+anova_tukey.R - The statistical difference in the distribution of TEs in the genome was calculated and plotted according to this R script. For the statistical differences of specific TE superfamilies between scaffolds, the same script was applied, on separated coverage files for each superfamily.
+
+# Age of TE insertions
+te_age - Workflow for extraction of all family insertions on the genome and generation of family trees.
+termlength.py - Script to extract the terminal branch lengths from the family trees.
+te_age.R - Script for calculation of family's terminal branch length medians and statistical analysis of differences between superfamilies.
+
+# Characterization of full-length insertions
+te_len.py - Script for extraction of sequences from the annotation file that possess at least 90% of its consensus size.
+full_length_tes - Workflow to obtain the characterization of full-length TEs.
+
 Files:
-
-detailed_methods.txt - Contains the detailed methods and code used to check the distribution of TEs in the Apareiodon sp. genome.
-
 apareiodon_te_consensus.fa - Consensus sequences of TE families obtained from the Apareiodon sp. genome.
 
 apareiodon_te_annot.gff.gz - Genome annotation of TEs in Apareiodon sp. genome.
