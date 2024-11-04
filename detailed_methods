@@ -1,4 +1,4 @@
-Detailed methods: TE distribution and activity on Apareiodon sp. genome
+Detailed methods: TE distribution, age inference, and full-length sequences on Apareiodon sp. genome
 
 Distribution of TEs on Apareiodon sp. scaffolds
 # Divide genome in 1Mb fragments
@@ -6,12 +6,13 @@ $ bedtools makewindows -g Apar_genome.fasta.length -w 1000000 -s 100000 > genome
 
 # TE coverage on genome
 $ bedtools coverage -a genome_windows.bed -b apareiodon_te_annot.gff > genome_coverage.out
-- For the distribution of TE superfamilies the script coverage_superf.sh was used, which runs the above code for each TE superfamily separately.
+- For the distribution of TE superfamilies the script coverage_superf.sh was used, which runs the above code for each TE superfamily separately. The file superfamilies.txt contains the IDs of all Apareiodon sp. TE superfamilies, used for the separated coverage analysis by the coverage_superf.sh script
+$ ./coverage_superf.sh superfamilies.txt
 
-# The statistical difference in the distribution of TEs in the genome was calculated and plotted according to the R script anova_tukey.R
+# The statistical difference in the distribution of TEs in the genome was calculated and plotted according to the R script anova_tukey.R on RStudio.
 - For the statistical differences of specific TE superfamilies between scaffolds, the same script was applied, on separated coverage files for each superfamily.
 
-Ages of TE insertions
+Age inference of TE insertions
 # To calculate the average age of TE families, insertions bigger than 100 bp were extracted from the TE annotation, and random 1000 insertions were selected for families with a high number of copies. 
 $ grep $line apareiodon_te_annot.gff | awk '{if($5-$4>100){print$0}}' | shuf -n 1000 | bedtools getfasta -fi Apar_genome.fasta -bed - > ${line}.fa
 
@@ -23,11 +24,13 @@ $ trimal -in ${line}.aln -gt 0.01 -keepheader > ${line}.trim.aln
 $ FastTree -nt -gamma < ${line}.trim.aln.sub > ${line}.tree
 
 # Terminal branch lengths were extracted with the termlength.py script
+$ for f in *tree; do ./termlength.py $f > $f.tbl; done
 
-# medians were calculated using the median function in R, and statistical analysis on median TE age from different superfamilies and the correlations between the number of insertions in a family and age were calculated with the te_age.R script
+# medians were calculated using the median function in R, and statistical analysis on median TE age from different superfamilies and the correlations between the number of insertions in a family and age were calculated with the te_age.R script on RStudio
 
 Full-length copies characterization
-# Insertions possessing at least 90% of its consensus size were extracted from the annotation file with the script TE_len.py.  
+# Insertions possessing at least 90% of its consensus size were extracted from the annotation file with the script TE_len.py. The inputs were the TE annotation file (apareiodon_te_annot.gff) and a file with the sizes of the TE consensus sequences (size.txt) 
+$ ./TE_len.py apareiodon_te_annot.gff size.txt > full-length-copies.gff
 
 # Fasta sequences from the full-length insertions were extracted and translated into amino acids. 
 $ grep $line full-length_copies.gff | awk -v OFS='\t' '{ print $1, $4, $5 }' | bedtools getfasta -fi Apar_genome.fasta -bed - > ${line}.fa
@@ -46,3 +49,6 @@ $ for f in *.fasta; do mafft --reorder --adjustdirection $f > $f.aln; done
 $ for f in *edit.aln; do cons -sequence $f -outseq $f.cons; done
 
 # The consensus were checked on TE-aid software for other structural characteristics.
+$ for f in *.cons; do ./TE-Aid -q $f -g Apar_genome.fasta -o fl_te-aid; done
+
+# Sequences possessing LTRs and TIRs were aligned against itself on the MAFFT tool web server to extract the respective LTR or TIR sequences as shown in Supplementary file 3
