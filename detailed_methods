@@ -17,7 +17,7 @@ Age inference of TE insertions
 $ grep $line apareiodon_te_annot.gff | awk '{if($5-$4>100){print$0}}' | shuf -n 1000 | bedtools getfasta -fi Apar_genome.fasta -bed - > ${line}.fa
 
 # Sequences were aligned on mafft, and trimmed with trimal.
-$ mafft --auto ${line}.fa > ${line}.aln
+$ mafft --reorder --adjustdirection ${line}.fa > ${line}.aln
 $ trimal -in ${line}.aln -gt 0.01 -keepheader > ${line}.trim.aln
 
 # Trees were built with FastTree. 
