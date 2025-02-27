@@ -22,5 +22,3 @@ apareiodon_te_consensus.fa - Consensus sequences of TE families obtained from th
 apareiodon_te_annot.gff.gz - Genome annotation of TEs in Apareiodon sp. genome.
 
 uncurated_library.fasta - Consensus sequences from the uncurated TE library.
-
-uncurated_library_annot.gff.gz - Genome annotation of uncurated library sequences on Apareiodon sp. genome.
