@@ -1,4 +1,4 @@
-This repository contains the detailed methods and code used in the paper entitled "A curated transposable element library from the genome of Neotropical fish Apareiodon sp. gives insight into its distribution and activity". Publication submitted to Chromosome Research.
+This repository contains the detailed methods and code used in the paper entitled "The landscape of transposable element distribution in the genome of Neotropical fish Apareiodon sp. (Characiformes: Parodontidae)". Article published in Chromosome Research (doi: 10.1007/s10577-025-09765-3).
 
 The code and files presented here aim to aid in the reproducibility of the analysis presented in the paper.
 
